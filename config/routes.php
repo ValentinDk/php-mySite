@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'product/([0-9]+)' => 'product/view/$1',
 
@@ -47,4 +47,4 @@ return array(
     
 
     '' => 'site/index',
- );
+ ];
