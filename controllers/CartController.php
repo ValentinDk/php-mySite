@@ -20,7 +20,6 @@ class CartController extends BaseController
     public function actionDeleteAjax(int $id)
     {
         Cart::deleteProduct($id);
-
         echo $this->getPartial();
 
         return true;
@@ -52,21 +51,15 @@ class CartController extends BaseController
         string $userPhone,
         string $userComment,
         array $productsInCart,
-        float $totalPrice)
+        float $totalPrice
+    )
     {
         if (User::isGuest()) {
             $userId = false;
         } else {
             $userId = $_SESSION['user']['id'];
         }
-        Order::save(
-            $userName,
-            $userPhone,
-            $userComment,
-            $userId,
-            $productsInCart,
-            $totalPrice
-        );
+        Order::save($userName, $userPhone, $userComment, $userId, $productsInCart, $totalPrice);
         return true;
     }
 
@@ -85,9 +78,9 @@ class CartController extends BaseController
     {
         if (empty($errors)) {
             $productsInCart = Cart::getProducts();
-            $totalPrice = self::getPrice();
-            $result = self::saveOrder($userName, $userPhone, $userComment, $productsInCart, $totalPrice);
-            self::sendMessageAdmin($result);
+            $totalPrice = $this->getPrice();
+            $result = $this->saveOrder($userName, $userPhone, $userComment, $productsInCart, $totalPrice);
+            $this->sendMessageAdmin($result);
             return true;
         }
     }
@@ -114,7 +107,7 @@ class CartController extends BaseController
     public function actionCheckout()
     {
         $categories = Category::getCategoriesList();
-        $totalPrice = self::getPrice();
+        $totalPrice = $this->getPrice();
         $totalQuantity = Cart::countItems();
         $result = false;
         $errors = [];
@@ -123,10 +116,10 @@ class CartController extends BaseController
             $userName = $_POST['userName'];
             $userPhone = $_POST['userPhone'];
             $userComment = $_POST['userComment'];
-            $errors = self::validation($userName, $userPhone);
-            $result = self::workWithForm($userName, $userPhone, $userComment, $errors);
+            $errors = $this->validation($userName, $userPhone);
+            $result = $this->workWithForm($userName, $userPhone, $userComment, $errors);
         } else {
-            $userName = self::getName();
+            $userName = $this->getName();
         }
         $this->objView->render(
         'cart/checkout', 
@@ -144,18 +137,13 @@ class CartController extends BaseController
 
     private function getPartial()
     {
-        $categories = Category::getCategoriesList();
-        $products = [];
-        $totalPrice = 0;
         $productsInCart = Cart::getProducts();
+        $categoriesView = $this->getCategoriesView();
 
         if ($productsInCart) {
-            // Получаем полную информацию о товарах
             $productsIds = array_keys($productsInCart);
             $products = Product::getProductsByIds($productsIds);
-
             $totalPrice = Cart::getTotalPrice($products);
-
             $tableInCart = $this->objView->fetchPartial(
                 'cart/table',
                 [
@@ -163,10 +151,6 @@ class CartController extends BaseController
                     'productsInCart' => $productsInCart,
                     'totalPrice' => $totalPrice,
                 ]
-            );
-            $categoriesView = $this->objView->fetchPartial(
-                'layouts/category',
-                ['categories' => $categories]
             );
             return $this->objView->fetchPartial(
                 'cart/index',
@@ -177,10 +161,6 @@ class CartController extends BaseController
                 ]
             );
         } else {
-            $categoriesView = $this->objView->fetchPartial(
-                'layouts/category',
-                ['categories' => $categories]
-            );
             return $this->objView->fetchPartial(
                 'cart/emptyCart',
                 ['categoriesView' => $categoriesView]

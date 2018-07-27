@@ -2,7 +2,6 @@
 namespace controllers;
 
 use components\BaseController;
-use models\Category;
 use models\Product;
 use models\User;
 
@@ -13,7 +12,6 @@ class SiteController extends BaseController
      */
 	public function actionIndex()
 	{
-		$categories = Category::getCategoriesList();
         $latestProducts = Product::getLatestProducts(3);
         $recommended = Product::getRecommendedProducts();
 
@@ -25,10 +23,7 @@ class SiteController extends BaseController
             'product/fetchProducts',
             ['products' => $latestProducts]
         );
-        $categoriesView = $this->objView->fetchPartial(
-            'layouts/category',
-            ['categories' => $categories]
-        );
+        $categoriesView = $this->getCategoriesView();
         $this->objView->render(
             'site/index',
             [

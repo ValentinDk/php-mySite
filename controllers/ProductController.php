@@ -2,7 +2,6 @@
 namespace controllers;
 
 use components\BaseController;
-use models\Category;
 use models\Product;
 
 class ProductController extends BaseController
@@ -12,14 +11,14 @@ class ProductController extends BaseController
      * @return bool
      */
     public function actionView(int $productId)
-    {   
-        $categories = Category::getCategoriesList();
+    {
+        $categoriesView = $this->getCategoriesView();
         $product = Product::getProductById($productId);
 
         $this->objView->render(
         	'product/view',
         	[
-        		'categories' => $categories,
+                'categoriesView' => $categoriesView,
         		'product' => $product,
         	]
         );

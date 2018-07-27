@@ -14,7 +14,7 @@ class UserController extends BaseController
         $email = '';
         $password = '';
         $result = false;
-        $errors = array();
+        $errors = [];
 
         if (isset($_POST['submit'])) {
             $name = $_POST['name'];

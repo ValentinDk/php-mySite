@@ -10,19 +10,15 @@ class CatalogController extends BaseController
 {
     public function actionIndex(int $page = 1)
     {
-        $categories = Category::getCategoriesList();
         $products = Product::getProductsByPage($page);
-        $total = Product::getTotalProducts(); 
+        $total = Product::getTotalProducts();
+        $categoriesView = $this->getCategoriesView();
 
         $pagination = new Pagination(
             $total,
             $page,
             Product::SHOW_BY_DEFAULT,
             'page-'
-        );
-        $categoriesView = $this->objView->fetchPartial(
-            'layouts/category',
-            ['categories' => $categories]
         );
         $productsView = $this->objView->fetchPartial(
             'product/fetchProducts',
