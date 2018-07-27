@@ -52,7 +52,6 @@ class SiteController extends BaseController
      */
 	public function actionSupport()
     {
-        // Переменные для формы
         $userEmail = false;
         $userText = false;
         $result = false;

@@ -34,18 +34,16 @@ class Cart
      */
     public static function deleteProduct(int $id)
     {
-        // Если в корзине уже есть товары
         if (isset($_SESSION['products'])) {
-            // То заполним массив товарами
             $productsInCart = $_SESSION['products'];
         }
-        // Уменьшение товара, если его больше, чем 1
+
         if (array_key_exists($id, $productsInCart)) {
             $productsInCart[$id] --;
         } else {
-            // Удаление
             $productsInCart[$id] = 0;
         }
+
         if ($productsInCart[$id] === 0) {
             unset($productsInCart[$id]);
         }

@@ -7,7 +7,7 @@ class Router
 
     public function __construct()
     {
-        $routesPath = ROOT.'/config/routes.php'; //Путь к роуту
+        $routesPath = ROOT.'/config/routes.php';
         $this->routes = include($routesPath);
     }
 
@@ -48,7 +48,6 @@ class Router
                 if (file_exists($controllerFile)){
                     include_once($controllerFile);
                 }
-
                 $controllerObject = new $controllerName;
                 $result = call_user_func_array([$controllerObject, $actionName], $parameters);
 
@@ -57,6 +56,7 @@ class Router
                 }
             }
         }
+
         if (!$result) {
             header("HTTP/1.0 404");
             echo "404";

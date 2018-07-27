@@ -7,7 +7,6 @@ namespace components;
 
 class Pagination
 {
-
     /**
      * 
      * @var Ссылок навигации на страницу
@@ -50,6 +49,7 @@ class Pagination
      * 
      * @return
      */
+
     public function __construct($total, $currentPage, $limit, $index)
     {
         # Устанавливаем общее количество записей
@@ -73,6 +73,7 @@ class Pagination
      * 
      * @return HTML-код со ссылками навигации
      */
+
     public function get()
     {
         # Для записи ссылок
@@ -137,6 +138,7 @@ class Pagination
      * 
      * @return массив с началом и концом отсчёта
      */
+
     private function limits()
     {
         # Вычисляем ссылки слева (чтобы активная ссылка была посередине)
@@ -167,12 +169,13 @@ class Pagination
      * 
      * @return
      */
+
     private function setCurrentPage($currentPage)
     {
         # Получаем номер страницы
         $this->current_page = $currentPage;
 
-        # Если текущая страница боле нуля
+        # Если текущая страница более нуля
         if ($this->current_page > 0) {
             # Если текунщая страница меньше общего количества страниц
             if ($this->current_page > $this->amount)

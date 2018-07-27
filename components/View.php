@@ -9,7 +9,7 @@ class View {
     {
         $this->layout = $layout;
     }
-    // получить отрендеренный шаблон с параметрами $params
+    // Получить отрендеренный шаблон с параметрами $params
     function fetchPartial($template, $params = []){
         extract($params);
         ob_start();
@@ -17,14 +17,13 @@ class View {
         return ob_get_clean();
     }
  
-    // вывести отрендеренный шаблон с параметрами $params
+    // Вывести отрендеренный шаблон с параметрами $params
     function renderPartial($template, $params = [])
     {
         echo $this->fetchPartial($template, $params);
     }
  
-    // получить отрендеренный в переменную $content layout-а
-    // шаблон с параметрами $params
+    // Получить отрендеренный шаблон в переменную $content layout-а
     function fetch($template, $params = [])
     {
         $content = $this->fetchPartial($template, $params);
@@ -32,8 +31,7 @@ class View {
         return $this->fetchPartial($layout, ['content' => $content]);
     }
  
-    // вывести отрендеренный в переменную $content layout-а
-    // шаблон с параметрами $params    
+    // Вывести отрендеренный шаблон в переменную $content layout-а
     function render($template, $params = [])
     {
         echo $this->fetch($template, $params);
