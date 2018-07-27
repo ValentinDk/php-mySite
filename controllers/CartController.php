@@ -37,106 +37,104 @@ class CartController extends BaseController
         return true;
     }
 
+    private function validation(string $userName, string $userPhone)
+    {
+        $errors = [];
+        if (!User::checkName($userName))
+            $errors[] = 'Неправильное имя';
+        if (!User::checkPhone($userPhone))
+            $errors[] = 'Неправильный телефон';
+        return $errors;
+    }
+
+    private function saveOrder($userName, $userPhone, $userComment, $productsInCart, $totalPrice)
+    {
+        if (User::isGuest()) {
+            $userId = false;
+        } else {
+            $userId = $_SESSION['user']['id'];
+        }
+        Order::save(
+            $userName,
+            $userPhone,
+            $userComment,
+            $userId,
+            $productsInCart,
+            $totalPrice
+        );
+        return true;
+    }
+
+    private function sendMessageAdmin($result)
+    {
+        if ($result) {
+            $adminEmail = 'tarasenok2012@mail.ru';
+            $message = 'http://localhost/admin/orders/index';
+            $subject = 'Новый заказ!';
+            mail($adminEmail, $subject, $message);
+            Cart::clear();
+        }
+    }
+
+    private function workWithForm($userName, $userPhone, $userComment, $errors)
+    {
+        if (empty($errors)) {
+            $productsInCart = Cart::getProducts();
+            $totalPrice = self::getPrice();
+            $result = self::saveOrder($userName, $userPhone, $userComment, $productsInCart, $totalPrice);
+            self::sendMessageAdmin($result);
+            return true;
+        }
+    }
+
+    private function getName()
+    {
+        if (!User::isGuest()) {
+            $userName = $_SESSION['user']['name'];
+        } else {
+            $userName = false;
+        }
+        return $userName;
+    }
+
+    private function getPrice()
+    {
+        $productsInCart = Cart::getProducts();
+        $productsIds = array_keys($productsInCart);
+        $products = Product::getProductsByIds($productsIds);
+        $totalPrice = Cart::getTotalPrice($products);
+        return $totalPrice;
+    }
+
     public function actionCheckout()
     {
-        // Список категорий для левого меню
         $categories = Category::getCategoriesList();
-        // Статус успешного оформления заказа
+        $totalPrice = self::getPrice();
+        $totalQuantity = Cart::countItems();
         $result = false;
-        $errors = array();
-        $totalQuantity = 0;
-        $totalPrice = 0;
-        // Если форма отправлена, то считываем данные формы
-        if (isset($_POST['submit'])) {
+        $errors = [];
 
+        if (isset($_POST['submit'])) {
             $userName = $_POST['userName'];
             $userPhone = $_POST['userPhone'];
             $userComment = $_POST['userComment'];
-            // Валидация полей
-            if (!User::checkName($userName))
-                $errors[] = 'Неправильное имя';
-            if (!User::checkPhone($userPhone))
-                $errors[] = 'Неправильный телефон';
-            // Если форма заполнена корректно, то сохраняем заказ в БД
-            if (empty($errors)) {
-                // Собираем информацию о заказе
-                $productsInCart = Cart::getProducts();
-                $productsIds = array_keys($productsInCart);
-                $products = Product::getProductsByIds($productsIds);
-                $totalPrice = Cart::getTotalPrice($products);
-                if (User::isGuest()) {
-                    $userId = false;
-                } else {
-                    $userId = $_SESSION['user']['id'];
-                }
-
-                $result = Order::save(
-                    $userName,
-                    $userPhone,
-                    $userComment,
-                    $userId,
-                    $productsInCart,
-                    $totalPrice
-                );
-
-                if ($result) {
-                    // Оповещаем администратора о новом заказе
-                    $adminEmail = 'tarasenok2012@mail.ru';
-                    $message = 'http://localhost/admin/orders/index';
-                    $subject = 'Новый заказ!';
-                    mail($adminEmail, $subject, $message);
-                    // Очищаем корзину
-                    Cart::clear();
-                }
-            // Если форма заполнена некорректн, то подводим итоги
-            } else {
-                $productsInCart = Cart::getProducts();
-                $productsIds = array_keys($productsInCart);
-                $products = Product::getProductsByIds($productsIds);
-                $totalPrice = Cart::getTotalPrice($products);
-                $totalQuantity = Cart::countItems();
-            }
-        // Если форма не отправлена, то получаем данные из корзины
+            $errors = self::validation($userName, $userPhone);
+            $result = self::workWithForm($userName, $userPhone, $userComment, $errors);
         } else {
-            $productsInCart = Cart::getProducts();
-            // Если в корзине нет товаров, то отправляем на главную
-            if ($productsInCart == false) {   
-                header("Location: /");
-            // Если в корзине есть товары, то подводим итоги
-            } else {
-                $productsIds = array_keys($productsInCart);
-                $products = Product::getProductsByIds($productsIds);
-                $totalPrice = Cart::getTotalPrice($products);
-                $totalQuantity = Cart::countItems();
-
-                $userName = false;
-                $userPhone = false;
-                $userComment = false;
-
-                // Если пользователь не авторизирован, то форма пустая
-                if (User::isGuest()) {
-                // Если пользователь авторизирован подставляем информацию с БД      
-                } else {
-                    $userName = $_SESSION['user']['name'];
-                }
-            }
-        }   
-
-    $this->objView->render(
+            $userName = self::getName();
+        }
+        $this->objView->render(
         'cart/checkout', 
-        [
-            'categories' => $categories,
-            'productsInCart' => $productsInCart,
-            'result' => $result,
-            'totalQuantity' => $totalQuantity,
-            'totalPrice' => $totalPrice,
-            'errors' => $errors,
-            'userName' => $userName,
-            'userPhone' => $userPhone,
-            'userComment' => $userComment,
-        ]
-    );
-    return true;
+            [
+                'categories' => $categories,
+                'result' => $result,
+                'totalQuantity' => $totalQuantity,
+                'totalPrice' => $totalPrice,
+                'errors' => $errors,
+                'userName' => $userName,
+            ]
+        );
+        return true;
     }
 
     private function getPartial()
