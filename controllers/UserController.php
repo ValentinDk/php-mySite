@@ -46,7 +46,7 @@ class UserController extends BaseController
                 'errors' => $errors,
                 'name' => $name,
                 'email' => $email,
-                'password' => $password
+                'password' => $password,
             ]
         );
         return true;
@@ -56,7 +56,7 @@ class UserController extends BaseController
     {
         $email = '';
         $password = '';
-        $errors = array();
+        $errors = [];
 
         if (isset($_POST['submit'])) {
             $email = $_POST['email'];
@@ -95,7 +95,7 @@ class UserController extends BaseController
             [
                 'errors' => $errors,
                 'email' => $email,
-                'password' => $password
+                'password' => $password,
             ]
         );
         return true;
@@ -159,7 +159,7 @@ class UserController extends BaseController
                 'result' => $result,
                 'errors' => $errors,
                 'name' => $name,
-                'password' => $password
+                'password' => $password,
             ]
         );
         return true;
@@ -174,7 +174,7 @@ class UserController extends BaseController
             'cabinet/history',
             [
                 'user' => $user,
-                'orders' => $orders
+                'orders' => $orders,
             ]
         );
         return true;

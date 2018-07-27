@@ -56,7 +56,7 @@ class Category
             [
                 'name' => $name,
                 'sort_order' => $sort_order,
-                'status' => $status
+                'status' => $status,
             ]
         );
         return $result = true;
@@ -78,7 +78,7 @@ class Category
                 'id' => $id,
                 'name' => $name,
                 'sort_order' => $sort_order,
-                'status' => $status
+                'status' => $status,
             ]
         );
         return $result = true;

@@ -33,7 +33,7 @@ class CatalogController extends BaseController
             [
                 'categoriesView' => $categoriesView,
                 'productsView' => $productsView,
-                'pagination' => $pagination
+                'pagination' => $pagination,
             ]
         );
         return true;
@@ -60,7 +60,7 @@ class CatalogController extends BaseController
             'layouts/category',
             [
                 'categories' => $categories,
-                'categoryId' => $categoryId
+                'categoryId' => $categoryId,
             ]
         );
         $productsView = $this->objView->fetchPartial(
@@ -72,7 +72,7 @@ class CatalogController extends BaseController
             [
                 'categoriesView' => $categoriesView,
                 'productsView' => $productsView,
-                'pagination' => $pagination
+                'pagination' => $pagination,
             ]
         );
         return true;

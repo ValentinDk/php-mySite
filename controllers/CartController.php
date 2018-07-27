@@ -133,7 +133,7 @@ class CartController extends BaseController
             'errors' => $errors,
             'userName' => $userName,
             'userPhone' => $userPhone,
-            'userComment' => $userComment
+            'userComment' => $userComment,
         ]
     );
     return true;
@@ -142,7 +142,7 @@ class CartController extends BaseController
     private function getPartial()
     {
         $categories = Category::getCategoriesList();
-        $products = array();
+        $products = [];
         $totalPrice = 0;
         $productsInCart = Cart::getProducts();
 
@@ -158,7 +158,7 @@ class CartController extends BaseController
                 [
                     'products' => $products,
                     'productsInCart' => $productsInCart,
-                    'totalPrice' => $totalPrice
+                    'totalPrice' => $totalPrice,
                 ]
             );
             $categoriesView = $this->objView->fetchPartial(
@@ -170,7 +170,7 @@ class CartController extends BaseController
                 [
                     'categoriesView' => $categoriesView,
                     'productsInCart' => $productsInCart,
-                    'tableInCart' => $tableInCart
+                    'tableInCart' => $tableInCart,
                 ]
             );
         } else {

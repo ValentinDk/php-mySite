@@ -17,7 +17,7 @@ class User
             [
                 'name' => $name,
                 'email' => $email,
-                'password' => $password
+                'password' => $password,
             ]
         );
 
@@ -39,7 +39,7 @@ class User
             [
                 'id' => $id,
                 'name' => $name,
-                'password' => $password
+                'password' => $password,
             ]
         );
         $result = self::getUserById($id);
@@ -58,7 +58,7 @@ class User
         $query->execute(
             [
                 'email' => $email,
-                'password' => $password
+                'password' => $password,
             ]
         );
         $user = $query->fetch();
@@ -115,9 +115,7 @@ class User
              WHERE email = :email'
          );
         $result->execute(
-            [
-                'email' => $email
-            ]
+            ['email' => $email]
         );
 
         if ($result -> fetchColumn()) {
@@ -170,7 +168,12 @@ class User
              SET cart = :products
              WHERE id = :userId'
          );
-        $query->execute(['products' => $products, 'userId' => $userId]);
+        $query->execute(
+            [
+                'products' => $products,
+                'userId' => $userId,
+            ]
+        );
 
         return $result = $query->fetch();
     }

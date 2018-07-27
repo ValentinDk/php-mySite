@@ -35,7 +35,7 @@ class Order
                 'user_comment' => $userComment,
                 'user_id' => $userId,
                 'products' => $products,
-                'price' => $price
+                'price' => $price,
             ]
         );
         return $query;

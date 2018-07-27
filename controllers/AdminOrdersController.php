@@ -16,7 +16,6 @@ class AdminOrdersController extends AdminBase
             'admin/orders/index',
             ['orders' => $orders]
         );
-
         return true;
     }
 
@@ -39,7 +38,7 @@ class AdminOrdersController extends AdminBase
             '/admin/orders/delete',
             [
                 'result' => $result,
-                'order' => $order
+                'order' => $order,
             ]
         );
         return true;
@@ -65,7 +64,7 @@ class AdminOrdersController extends AdminBase
                 'order' => $order,
                 'products' => $products,
                 'userProducts' => $userProducts,
-                'totalPrice' => $totalPrice
+                'totalPrice' => $totalPrice,
             ]
         );
         return true;

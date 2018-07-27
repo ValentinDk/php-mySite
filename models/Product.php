@@ -7,9 +7,8 @@ class Product
 {
     const SHOW_BY_DEFAULT = 3;
 
-    public static function getLatestProducts($count = self::SHOW_BY_DEFAULT)
+    public static function getLatestProducts(int $count = self::SHOW_BY_DEFAULT)
     {
-        $count = intval($count);
         $db = Database::getConnection();
 
         $productsList = [];
@@ -47,7 +46,7 @@ class Product
                 [
                     "category_id" => $categoryId,
                     "count" => self::SHOW_BY_DEFAULT,
-                    "offset" => $offset
+                    "offset" => $offset,
                 ]
             );
         $products = $query->fetchAll();
@@ -85,9 +84,7 @@ class Product
             WHERE status = "1" AND category_id = :category_id'
         );
         $query->execute(
-            [
-                "category_id" => $categoryId
-            ]
+            ["category_id" => $categoryId]
         );
         $row = $query->fetch();
 
@@ -111,9 +108,8 @@ class Product
         return $result;
     }
 
-    public static function getProductsByPage($page)
+    public static function getProductsByPage(int $page)
     {
-        $page = intval($page);
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
 
         $db = Database::getConnection();
@@ -128,7 +124,7 @@ class Product
         $query->execute(
             [
                 'limit' => self::SHOW_BY_DEFAULT,
-                'offset' => $offset
+                'offset' => $offset,
             ]
         );
         $result = $query->fetchAll();
@@ -169,7 +165,6 @@ class Product
             'SELECT * FROM product
              WHERE status = "0"'
         );
-
         return $result = $query->fetchAll();
     }
 
@@ -203,7 +198,7 @@ class Product
                 'description' => $description,
                 'is_new' => $is_new,
                 'is_recommended' => $is_recommended,
-                'status' => $status
+                'status' => $status,
             ]
         );
         return $result = true;
@@ -265,7 +260,7 @@ class Product
                 'description' => $description,
                 'is_new' => $is_new,
                 'is_recommended' => $is_recommended,
-                'status' => $status
+                'status' => $status,
             ]
         );
         $id = self::getLastId();

@@ -24,10 +24,9 @@ class AdminProductsController extends AdminBase
             'admin/products/hiddenProducts',
             [
                 'categoriesView' => $categoriesView,
-                'products' => $products
+                'products' => $products,
             ]
-        ); 
-
+        );
         return true;
     }
 
@@ -76,10 +75,9 @@ class AdminProductsController extends AdminBase
                 'id' => $id,
                 'product' => $product,
                 'categories' => $categories,
-                'result' => $result
+                'result' => $result,
             ]
         );
-
         return true;
     }
 
@@ -105,10 +103,9 @@ class AdminProductsController extends AdminBase
             'admin/products/delete',
             [
                 'result' => $result,
-                'product' => $product
+                'product' => $product,
             ]
-        );        
-
+        );
         return true;
     }
 

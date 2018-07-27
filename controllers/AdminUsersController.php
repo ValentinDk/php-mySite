@@ -16,9 +16,7 @@ class AdminUsersController extends AdminBase
         
     	$this->objView->render(
     		'admin//users/index',
-    		[
-    			'users' => $users,
-    		]
+    		['users' => $users]
     	);
         return true;
     }
@@ -35,7 +33,6 @@ class AdminUsersController extends AdminBase
         if (isset($_POST['delete'])) {
             User::delete($id);
             $result = true;
-
         } elseif (isset($_POST['undelete'])) {
             header('Location: /admin');
         }
@@ -43,7 +40,7 @@ class AdminUsersController extends AdminBase
             '/admin/users/delete',
             [
                 'result' => $result,
-                'user' => $user
+                'user' => $user,
             ]
         );
         return true;

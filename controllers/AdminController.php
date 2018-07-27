@@ -33,7 +33,7 @@ class AdminController extends AdminBase
             [
                 'categoriesView' => $categoriesView,
                 'productsView' => $productsView,
-                'pagination' => $pagination
+                'pagination' => $pagination,
             ]
         );
 

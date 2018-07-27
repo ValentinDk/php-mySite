@@ -20,7 +20,7 @@ class ProductController extends BaseController
         	'product/view',
         	[
         		'categories' => $categories,
-        		'product' => $product
+        		'product' => $product,
         	]
         );
         return true;

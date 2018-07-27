@@ -22,7 +22,7 @@ class AdminCategoryController extends AdminBase
             'admin/layouts/category',
         	[
                 'categories' => $categories,
-                'categoryId' => $categoryId
+                'categoryId' => $categoryId,
             ]
         );
         $productsView = $this->objView->fetchPartial(
@@ -33,7 +33,7 @@ class AdminCategoryController extends AdminBase
             'admin/catalog/category',
         	[
         		'categoriesView' => $categoriesView,
-                'productsView' => $productsView
+                'productsView' => $productsView,
             ]
         );
         return true;
@@ -65,7 +65,7 @@ class AdminCategoryController extends AdminBase
             'admin/catalog/edit',
             [
                 'result' => $result,
-                'categories' => $categories
+                'categories' => $categories,
             ]
         );
 
@@ -93,9 +93,7 @@ class AdminCategoryController extends AdminBase
         }
         $this->objView->render(
             'admin/catalog/create',
-            [
-                'result' => $result
-            ]
+            ['result' => $result]
         );
 
         return true;
@@ -122,7 +120,7 @@ class AdminCategoryController extends AdminBase
             'admin/catalog/delete',
             [
                 'result' => $result,
-                'categories' => $categories
+                'categories' => $categories,
             ]
         );
         return true; 

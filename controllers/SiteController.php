@@ -34,7 +34,7 @@ class SiteController extends BaseController
             [
                 'categoriesView' => $categoriesView,
                 'productsView' => $productsView,
-                'recommendedView' => $recommendedView
+                'recommendedView' => $recommendedView,
             ]
         );
 		return true;
@@ -82,7 +82,7 @@ class SiteController extends BaseController
                 'result' => $result,
                  'errors' => $errors,
                  'userEmail' => $userEmail,
-                 'userText' => $userText
+                 'userText' => $userText,
              ]
          );
         return true;
