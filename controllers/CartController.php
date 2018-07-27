@@ -1,14 +1,17 @@
 <?php
 namespace controllers;
 
-use models\{Cart, Category, Product, User, Order};
 use components\BaseController;
+use models\Cart;
+use models\Category;
+use models\Product;
+use models\User;
+use models\Order;
 
 class CartController extends BaseController
 {
     public function actionAddAjax($id)
     {
-        //Добавляем товар в корзину
         echo Cart::addProduct($id);
 
         return true;
@@ -16,7 +19,6 @@ class CartController extends BaseController
 
     public function actionDeleteAjax($id)
     {
-        // Удаление товара из корзины
         Cart::deleteProduct($id);
 
         echo $this->getPartial();
@@ -33,7 +35,6 @@ class CartController extends BaseController
         );
 
         return true;
-
     }
 
     public function actionCheckout()
@@ -135,7 +136,6 @@ class CartController extends BaseController
             'userComment' => $userComment
         ]
     );
-
     return true;
     }
 
@@ -144,7 +144,6 @@ class CartController extends BaseController
         $categories = Category::getCategoriesList();
         $products = array();
         $totalPrice = 0;
-        // Получаем данные из корзины
         $productsInCart = Cart::getProducts();
 
         if ($productsInCart) {
@@ -152,7 +151,6 @@ class CartController extends BaseController
             $productsIds = array_keys($productsInCart);
             $products = Product::getProductsByIds($productsIds);
 
-            // Общая стоимость товара
             $totalPrice = Cart::getTotalPrice($products);
 
             $tableInCart = $this->objView->fetchPartial(
@@ -175,7 +173,6 @@ class CartController extends BaseController
                     'tableInCart' => $tableInCart
                 ]
             );
-
         } else {
             $categoriesView = $this->objView->fetchPartial(
                 'layouts/category',

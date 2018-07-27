@@ -2,26 +2,33 @@
 namespace controllers;
 
 use models\User;
-use components\{Pagination, AdminBase};
+use components\Pagination;
+use components\AdminBase;
 
 class AdminUsersController extends AdminBase
 {
-    public function actionIndex(){
-
+    /**
+     * @return bool
+     */
+    public function actionIndex()
+    {
     	$users = User::getAllUser();
         
     	$this->objView->render(
     		'admin//users/index',
     		[
     			'users' => $users,
-    			
     		]
     	);
         return true;
     }
 
-    public function actionDelete($id){
-
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function actionDelete($id)
+    {
         $result = false;
         $user = User::getUserById($id);
 
@@ -32,7 +39,6 @@ class AdminUsersController extends AdminBase
         } elseif (isset($_POST['undelete'])) {
             header('Location: /admin');
         }
-
         $this->objView->render(
             '/admin/users/delete',
             [

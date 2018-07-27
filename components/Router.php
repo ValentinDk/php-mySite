@@ -7,10 +7,13 @@ class Router
 
     public function __construct()
     {
-        $routesPath= ROOT.'/config/routes.php'; //Путь к роуту
+        $routesPath = ROOT.'/config/routes.php'; //Путь к роуту
         $this->routes = include($routesPath);
     }
 
+    /**
+     * @return string
+     */
     private function getURI() //Returns request string
     {
         if (!empty($_SERVER['REQUEST_URI'])) {
@@ -32,16 +35,12 @@ class Router
                 //Получение внутреннего путя из внешнего
                 $internalRoute=preg_replace("~$uriPattern~", $path, $uri);
 
-                //news/view/54
-
-
                 //Определение контроллера и action'а, которые обрабатывают запрос
                 $segments=explode('/', $internalRoute);
                 
                 $controllerName = 'controllers\\'.ucfirst(array_shift($segments).'Controller');
                 $actionName = 'action'.ucfirst(array_shift($segments));
                 $parameters = $segments;
-                
 
                 //Подключение файла класса-контроллера
                 $controllerFile=ROOT.'/controllers/'.$controllerName.'.php';
@@ -50,12 +49,8 @@ class Router
                     include_once($controllerFile);
                 }
 
-                //Саздание объекта и вызывание action'а
                 $controllerObject = new $controllerName;
-
-                // object->actionView(54)
-
-                $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
+                $result = call_user_func_array([$controllerObject, $actionName], $parameters);
 
                 if ($result) {
                     break;

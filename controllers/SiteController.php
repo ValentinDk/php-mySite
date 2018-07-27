@@ -1,12 +1,16 @@
 <?php
 namespace controllers;
 
-use models\{Category, Product, User};
 use components\BaseController;
+use models\Category;
+use models\Product;
+use models\User;
 
 class SiteController extends BaseController
 {
-
+    /**
+     * @return bool
+     */
 	public function actionIndex()
 	{
 		$categories = Category::getCategoriesList();
@@ -32,8 +36,7 @@ class SiteController extends BaseController
                 'productsView' => $productsView,
                 'recommendedView' => $recommendedView
             ]
-        );		
-
+        );
 		return true;
 	}
 
@@ -44,13 +47,16 @@ class SiteController extends BaseController
 		return true;
 	}
 
+    /**
+     * @return bool
+     */
 	public function actionSupport()
     {
         // Переменные для формы
         $userEmail = false;
         $userText = false;
         $result = false;
-        $errors = array();
+        $errors = [];
         // Обработка формы
         if (isset($_POST['submit'])) {
             // Если форма отправлена 
@@ -71,7 +77,6 @@ class SiteController extends BaseController
                 $result = true;
             }
         }
-        // Подключаем вид
         $this->objView->render(
             'site/support',
             [
@@ -81,7 +86,6 @@ class SiteController extends BaseController
                  'userText' => $userText
              ]
          );
-
         return true;
     }
 }

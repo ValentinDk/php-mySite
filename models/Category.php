@@ -9,7 +9,7 @@ class Category
     {
         $db = Database::getConnection();
 
-        $categoryList = array();
+        $categoryList = [];
         
         $result = $db->query(
             'SELECT id, name
@@ -17,13 +17,12 @@ class Category
              WHERE status = "1"
              ORDER BY sort_order ASC'
         );
-
         $categoryList = $result->fetchAll();
         
         return $categoryList;
     }
 
-    public static function getCategoryById($id)
+    public static function getCategoryById(int $id)
     {
         $db = Database::getConnection();
 
@@ -34,7 +33,6 @@ class Category
         $query->execute(
             ['id' => $id]
         );
-
         return $query->fetch();
     }
 
@@ -61,7 +59,6 @@ class Category
                 'status' => $status
             ]
         );
-
         return $result = true;
     }
 
@@ -84,11 +81,10 @@ class Category
                 'status' => $status
             ]
         );
-
         return $result = true;
     }
 
-    public static function delete($id)
+    public static function delete(int $id)
     {
         $db = Database::getConnection();
 
@@ -96,11 +92,9 @@ class Category
             DELETE FROM category
             WHERE id= :id'
         );
-
         $query->execute(
             ['id' => $id]
         );
-
         return $result = true;
     }
 
@@ -108,14 +102,13 @@ class Category
     {
         $db = Database::getConnection();
 
-        $categoryList = array();
+        $categoryList = [];
         
         $query = $db->query(
             'SELECT id, name
              FROM category
              ORDER BY sort_order ASC'
         );
-
         $categoryList = $query->fetchAll();
         
         return $categoryList;

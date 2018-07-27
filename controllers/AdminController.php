@@ -1,12 +1,18 @@
 <?php
 namespace controllers;
 
-use models\{Category, Product};
-use components\{Pagination, AdminBase};
+use components\Pagination;
+use components\AdminBase;
+use models\Category;
+use models\Product;
 
 class AdminController extends AdminBase
 {
-    public function actionIndex($page = 1)
+    /**
+     * @param int $page
+     * @return bool
+     */
+    public function actionIndex(int $page = 1)
     {
         $categories = Category::getAllCategories();
         $products = Product::getProductsByPage($page);
@@ -29,7 +35,7 @@ class AdminController extends AdminBase
                 'productsView' => $productsView,
                 'pagination' => $pagination
             ]
-        );      
+        );
 
         return true;
     }

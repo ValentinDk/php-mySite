@@ -1,8 +1,10 @@
 <?php
 namespace controllers;
 
-use models\{User, Product, Order};
 use components\BaseController;
+use models\User;
+use models\Product;
+use models\Order;
 
 class UserController extends BaseController
 {
@@ -37,7 +39,6 @@ class UserController extends BaseController
                 $result = true;
             }
         }
-
         $this->objView->render(
             'user/register',
             [
@@ -48,7 +49,6 @@ class UserController extends BaseController
                 'password' => $password
             ]
         );
-
         return true;
     }
 
@@ -68,6 +68,7 @@ class UserController extends BaseController
                 $errors[] = 'Неверные данные';
             } else {
                 User::auth($user);
+
                 if (($user['cart']) != "[]") {                
                     $userOrder = json_decode($user['cart'], true);
                     $productsIds = array_keys($userOrder);
@@ -75,9 +76,9 @@ class UserController extends BaseController
                     var_dump($user);
                     foreach ($orderedProd as $product) {
                         $uptUserOrder[$product["id"]] = $userOrder[$product["id"]];
-                    }                    
-
+                    }
                     $_SESSION['products'] =  $uptUserOrder;
+
                 } else {
                     $_SESSION['products'] = array();
                 }
@@ -89,7 +90,6 @@ class UserController extends BaseController
                 }
             }
         }
-
         $this->objView->render(
             'user/login',
             [
@@ -98,7 +98,6 @@ class UserController extends BaseController
                 'password' => $password
             ]
         );
-
         return true;
     }
 
@@ -127,8 +126,6 @@ class UserController extends BaseController
         } else {
             header('Location: /user/login');
         }
-        
-
         return true;
     }
 
@@ -165,7 +162,6 @@ class UserController extends BaseController
                 'password' => $password
             ]
         );
-
         return true;
     }
 
@@ -173,7 +169,6 @@ class UserController extends BaseController
     {
         $user = $_SESSION['user'];
         $orders = Order::getOrderByUserId($user['id']);
-
 
         $this->objView->render(
             'cabinet/history',

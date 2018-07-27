@@ -1,14 +1,15 @@
 <?php
 namespace controllers;
 
-use models\{Category, Product};
-use components\{Pagination, BaseController};
+use components\Pagination;
+use components\BaseController;
+use models\Category;
+use models\Product;
 
 class CatalogController extends BaseController
 {
-    public function actionIndex($page = 1)
+    public function actionIndex(int $page = 1)
     {
-
         $categories = Category::getCategoriesList();
         $products = Product::getProductsByPage($page);
         $total = Product::getTotalProducts(); 
@@ -19,7 +20,6 @@ class CatalogController extends BaseController
             Product::SHOW_BY_DEFAULT,
             'page-'
         );
-
         $categoriesView = $this->objView->fetchPartial(
             'layouts/category',
             ['categories' => $categories]
@@ -28,7 +28,6 @@ class CatalogController extends BaseController
             'product/fetchProducts',
             ['products' => $products]
         );
-        
         $this->objView->render(
             'catalog/index',
             [
@@ -37,13 +36,16 @@ class CatalogController extends BaseController
                 'pagination' => $pagination
             ]
         );
-
         return true;
     }
 
-    public function actionCategory($categoryId, $page = 1)
+    /**
+     * @param int $categoryId
+     * @param int $page
+     * @return bool
+     */
+    public function actionCategory(int $categoryId, int $page = 1)
     {
-
         $categories = Category::getCategoriesList();
         $categoryProducts = Product::getProductsListByCategory($categoryId, $page);
         $total = Product::getTotalProductsInCategory($categoryId);
@@ -54,7 +56,6 @@ class CatalogController extends BaseController
             Product::SHOW_BY_DEFAULT,
             'page-'
         );
-
         $categoriesView = $this->objView->fetchPartial(
             'layouts/category',
             [
@@ -74,7 +75,6 @@ class CatalogController extends BaseController
                 'pagination' => $pagination
             ]
         );
-
         return true;
     }
 }

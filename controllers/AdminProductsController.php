@@ -1,11 +1,16 @@
 <?php
 namespace controllers;
 
-use models\{Product, Category};
-use components\{AdminBase, Pagination};
+use components\AdminBase;
+use components\Pagination;
+use models\Product;
+use models\Category;
 
 class AdminProductsController extends AdminBase
 {
+    /**
+     * @return bool
+     */
     public function actionHidden()
     {
         $categories = Category::getAllCategories();
@@ -25,6 +30,7 @@ class AdminProductsController extends AdminBase
 
         return true;
     }
+
     public function actionEdit($id)
     {
         $result = false;
@@ -77,13 +83,16 @@ class AdminProductsController extends AdminBase
         return true;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function actionDelete($id)
     {
         $result = false;
         $product = Product::getProductById($id);
 
         if (isset($_POST['delete'])) {
-
             Product::delete($product['id']);
             Product::deleteImage($id);
             $result = true;
@@ -92,7 +101,6 @@ class AdminProductsController extends AdminBase
             header ('Location: /admin');
             exit;
         }
-
         $this->objView->render(
             'admin/products/delete',
             [
@@ -104,13 +112,15 @@ class AdminProductsController extends AdminBase
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function actionCreate()
     {
         $result = false;
         $categories = Category::getCategoriesList();
 
         if (isset($_POST['submit'])) {
-
             $name = $_POST['name'];
             $code = $_POST['code'];
             $price = $_POST['price'];
@@ -134,12 +144,10 @@ class AdminProductsController extends AdminBase
                 $is_recommended,
                 $status
             );
-
             Product::setImage($id);
 
             $result = true;
         }
-
         $this->objView->render(
             'admin/products/create',
             [
@@ -147,7 +155,6 @@ class AdminProductsController extends AdminBase
                 'categories' => $categories,
             ]
         );
-
         return true;
     }
 }

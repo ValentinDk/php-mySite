@@ -28,7 +28,6 @@ class Order
                 :price
             )'
         );
-        
         $query->execute(
             [
                 'user_name' => $userName,
@@ -39,7 +38,6 @@ class Order
                 'price' => $price
             ]
         );
-
         return $query;
 	}
 
@@ -47,7 +45,7 @@ class Order
     {
         $db = Database::getConnection();
 
-        $ordersList = array();
+        $ordersList = [];
 
         $query = $db->query(
             'SELECT
@@ -60,13 +58,12 @@ class Order
             FROM product_order
             ORDER BY date DESC'
         );
-
         $ordersList = $query->fetchAll();
 
         return $ordersList;
     }
 
-    public static function getOrderById($id)
+    public static function getOrderById(int $id)
     {
         $db = Database::getConnection();
 
@@ -82,15 +79,13 @@ class Order
              FROM product_order
              WHERE id = :id'
         );
-
         $query->execute(
             ['id' => $id]
         );
-
         return $query->fetch();
     }
 
-    public static function delete($id)
+    public static function delete(int $id)
     {
         $db = Database::getConnection();
 
@@ -98,15 +93,13 @@ class Order
             'DELETE FROM product_order
              WHERE id = :id'
         );
-
         $query->execute(
             ['id' => $id]
         );
-
         return true;
     }
 
-    public static function getOrderByUserId($userId)
+    public static function getOrderByUserId(int $userId)
     {
         $db = Database::getConnection();
 
@@ -123,11 +116,9 @@ class Order
              WHERE user_id = :user_id
              ORDER BY date DESC'
         );
-
         $query->execute(
             ['user_id' => $userId]
         );
-
         return $query->fetchAll();
     }
 }

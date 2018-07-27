@@ -1,13 +1,17 @@
 <?php
 namespace controllers;
 
-use models\{Category, Product};
 use components\BaseController;
+use models\Category;
+use models\Product;
 
 class ProductController extends BaseController
 {
-    
-    public function actionView($productId)
+    /**
+     * @param int $productId
+     * @return bool
+     */
+    public function actionView(int $productId)
     {   
         $categories = Category::getCategoriesList();
         $product = Product::getProductById($productId);
@@ -19,7 +23,6 @@ class ProductController extends BaseController
         		'product' => $product
         	]
         );
-
         return true;
     }
 }

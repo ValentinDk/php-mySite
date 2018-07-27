@@ -7,8 +7,8 @@ class AdminBase
 {
 	public $objView;
 
-	public function __construct(){
-
+	public function __construct()
+    {
 		if (!User::isGuest()){
 			//Пользователь залогирован
 			if (!User::isAdmin()){

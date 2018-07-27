@@ -1,8 +1,10 @@
 <?php
 namespace controllers;
 
-use models\{Order, Cart, Product};
 use components\AdminBase;
+use models\Order;
+use models\Cart;
+use models\Product;
 
 class AdminOrdersController extends AdminBase
 {
@@ -18,6 +20,10 @@ class AdminOrdersController extends AdminBase
         return true;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function actionDelete($id)
     {
         $result = false;
@@ -29,7 +35,6 @@ class AdminOrdersController extends AdminBase
         } elseif (isset($_POST['undelete'])) {
             header('Location: /admin');
         }
-
         $this->objView->render(
             '/admin/orders/delete',
             [
@@ -40,6 +45,10 @@ class AdminOrdersController extends AdminBase
         return true;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function actionView($id)
     {
         $order = Order::getOrderById($id);

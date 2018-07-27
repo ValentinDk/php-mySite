@@ -7,13 +7,12 @@ class Product
 {
     const SHOW_BY_DEFAULT = 3;
 
-
     public static function getLatestProducts($count = self::SHOW_BY_DEFAULT)
     {
         $count = intval($count);
         $db = Database::getConnection();
 
-        $productsList = array();
+        $productsList = [];
 
         $result = $db->query(
             'SELECT id, name, price, is_new  
@@ -22,7 +21,6 @@ class Product
              ORDER BY id DESC
              LIMIT ' . $count
         );
-
         $productsList = $result->fetchAll();
 
         return $productsList;
@@ -36,7 +34,7 @@ class Product
             $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
 
             $db = Database::getConnection();
-            $products = array();
+            $products = [];
             $query = $db->prepare(
                 "SELECT id, name, price, is_new  
                  FROM product
@@ -45,7 +43,6 @@ class Product
                  LIMIT :count
                  OFFSET :offset"
             );
-
             $query->execute(
                 [
                     "category_id" => $categoryId,
@@ -53,37 +50,32 @@ class Product
                     "offset" => $offset
                 ]
             );
-
         $products = $query->fetchAll();
 
         return $products;
         }
     }
 
-    public static function getProductById($id)
+    public static function getProductById(int $id)
     {
         $id = intval($id);
 
         if ($id) {
-
             $db = Database::getConnection();
-            
             $query = $db->prepare(
                 'SELECT * FROM product
                  WHERE id = :id'
             );
-
             $query->execute(
                 ['id' => $id]
             );
-
             $result = $query->fetch();
 
         return $result;
-        
         }
     }
-    public static function getTotalProductsInCategory($categoryId)
+
+    public static function getTotalProductsInCategory(int $categoryId)
     {
         $db = Database::getConnection();
 
@@ -92,13 +84,11 @@ class Product
             FROM product
             WHERE status = "1" AND category_id = :category_id'
         );
-
         $query->execute(
             [
                 "category_id" => $categoryId
             ]
         );
-
         $row = $query->fetch();
 
         return $row['count'];
@@ -106,7 +96,7 @@ class Product
 
     public static function getProductsByIds($idsArray)
     {
-        $products = array();
+        $products = [];
 
         $db = Database::getConnection();
 
@@ -154,7 +144,6 @@ class Product
             'SELECT count(id) AS count FROM product
              WHERE status = "1"'
         );
-
         $row = $result->fetch();
 
         return $row['count'];
@@ -217,11 +206,10 @@ class Product
                 'status' => $status
             ]
         );
-
         return $result = true;
     }
 
-    public static function delete($id)
+    public static function delete(int $id)
     {
         $db = Database::getConnection();
 
@@ -232,7 +220,6 @@ class Product
         $query->execute(
             ['id' => $id]
         );
-
         return $result = true;
     }
 
@@ -267,7 +254,6 @@ class Product
                 :status
             )'
         );
-
         $query->execute(
             [
                 'name' => $name,
@@ -300,7 +286,7 @@ class Product
         return $lastId['id'];
     }
 
-    public static function setImage($id)
+    public static function setImage(int $id)
     {
         if ($_FILES['image']['size'] != 0) {
             if (file_exists(ROOT."/template/images/products/$id.jpg")) {
@@ -312,14 +298,14 @@ class Product
         }
     }
 
-    public static function deleteImage($id)
+    public static function deleteImage(int $id)
     {
         if (file_exists(ROOT."/template/images/products/$id.jpg")) {
             unlink(ROOT."/template/images/products/$id.jpg");
         }
     }
 
-    public static function getImage($id)
+    public static function getImage(int $id)
     {
         $path = "/template/images/products/$id.jpg";
         if (file_exists(ROOT.$path)) {

@@ -3,20 +3,19 @@ namespace models;
 
 class Cart
 {
-
-    public static function addProduct($id)
+    /**
+     * @param int $id
+     * @return int
+     */
+    public static function addProduct(int $id)
     {
-        $id = intval($id);
-
-        // Пустой массив для товаров в корзине
-        $productsInCart = array();
+        $productsInCart = [];
 
         // Если в корзине уже есть товары
         if (isset($_SESSION['products'])) {
             // То заполним массив товарами
             $productsInCart = $_SESSION['products'];
         }
-
         // Увеличение кол-ва, если товар добавлен повторно
         if (array_key_exists($id, $productsInCart)) {
             $productsInCart[$id] ++;
@@ -24,21 +23,22 @@ class Cart
             // Добавление нового товара
             $productsInCart[$id] = 1;
         }
-
         $_SESSION['products'] = $productsInCart;
 
         return self::countItems();
     }
 
-    public static function deleteProduct($id)
+    /**
+     * @param int $id
+     * @return int
+     */
+    public static function deleteProduct(int $id)
     {
-        $id = intval($id);
         // Если в корзине уже есть товары
         if (isset($_SESSION['products'])) {
             // То заполним массив товарами
             $productsInCart = $_SESSION['products'];
         }
-
         // Уменьшение товара, если его больше, чем 1
         if (array_key_exists($id, $productsInCart)) {
             $productsInCart[$id] --;
@@ -46,16 +46,17 @@ class Cart
             // Удаление
             $productsInCart[$id] = 0;
         }
-        if ($productsInCart[$id] == 0) {
+        if ($productsInCart[$id] === 0) {
             unset($productsInCart[$id]);
         }
-
         $_SESSION['products'] = $productsInCart;
 
         return self::countItems();
     }
 
-    // Подсчёт кол-ва товаров в корзине
+    /**
+     * @return int
+     */
     public static function countItems()
     {
         if (isset($_SESSION['products'])) {
@@ -77,6 +78,10 @@ class Cart
         return false;
     }
 
+    /**
+     * @param $products
+     * @return float|int
+     */
     public static function getTotalPrice($products)
     {
         $productsInCart = self::getProducts();
@@ -107,7 +112,7 @@ class Cart
     {
         if (isset($_SESSION['products'])) {
             unset($_SESSION['products']);
-            $_SESSION['products'] = array();
+            $_SESSION['products'] = [];
         }
     }
 }

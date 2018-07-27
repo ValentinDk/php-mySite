@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'host' => 'localhost',
     'dbname' => 'super_mag',
     'user' => 'root',
@@ -8,4 +8,4 @@ return array(
     'options' => [PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                   PDO::ATTR_EMULATE_PREPARES   => false]
-);
+];

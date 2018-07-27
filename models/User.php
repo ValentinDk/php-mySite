@@ -42,7 +42,6 @@ class User
                 'password' => $password
             ]
         );
-
         $result = self::getUserById($id);
         
         return $result;
@@ -62,7 +61,6 @@ class User
                 'password' => $password
             ]
         );
-
         $user = $query->fetch();
 
         if($user) {
@@ -76,33 +74,40 @@ class User
         $_SESSION['user'] = $user;
     }
 
-    public static function checkName($name) {
+    public static function checkName($name)
+    {
         if (strlen($name) >= 2) {
             return true;
         }
         return false;
     }
-    public static function checkPassword($password) {
+
+    public static function checkPassword($password)
+    {
         if (strlen($password) >= 6) {
             return true;
         }
         return false;
     }
-    public static function checkEmail($email) {
+
+    public static function checkEmail($email)
+    {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
         return false;
     }
-    public static function checkPhone($phone) {
+
+    public static function checkPhone($phone)
+    {
         if (strlen($phone) >= 7) {
             return true;
         }
         return false;
     }
 
-    public static function checkEmailExists($email) {
-
+    public static function checkEmailExists($email)
+    {
         $db = Database::getConnection();
 
         $result = $db -> prepare(
@@ -137,7 +142,7 @@ class User
         return false;
     }
 
-    public static function getUserById($userId)
+    public static function getUserById(int $userId)
     {
         $id = intval($userId);
 
@@ -151,7 +156,6 @@ class User
             $query->execute(
                 ['id' => $id]
             );
-       
             $result = $query->fetch();
 
             return $result;
@@ -166,7 +170,6 @@ class User
              SET cart = :products
              WHERE id = :userId'
          );
-
         $query->execute(['products' => $products, 'userId' => $userId]);
 
         return $result = $query->fetch();
@@ -176,7 +179,7 @@ class User
     {
         $db = Database::getConnection();
 
-        $result = array();
+        $result = [];
 
         $query = $db->query(
             'SELECT * FROM user
@@ -196,7 +199,6 @@ class User
             'DELETE FROM user
              WHERE id = :id'
         );
-
         $query->execute(
             ['id' => $id]
         );
