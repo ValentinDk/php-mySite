@@ -40,10 +40,10 @@ class AdminCategoryController extends AdminBase
     }
 
     /**
-     * @param $categoryId
+     * @param int $categoryId
      * @return bool
      */
-    public function actionEdit($categoryId)
+    public function actionEdit(int $categoryId)
     {
         $result = false;
         $categories = Category::getCategoryById($categoryId);
@@ -100,10 +100,10 @@ class AdminCategoryController extends AdminBase
     }
 
     /**
-     * @param $categoryId
+     * @param int $categoryId
      * @return bool
      */
-    public function actionDelete($categoryId)
+    public function actionDelete(int $categoryId)
     {
         $result = false;
         $categories = Category::getCategoryById($categoryId);

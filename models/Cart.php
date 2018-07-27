@@ -77,10 +77,10 @@ class Cart
     }
 
     /**
-     * @param $products
+     * @param array $products
      * @return float|int
      */
-    public static function getTotalPrice($products)
+    public static function getTotalPrice(array $products)
     {
         $productsInCart = self::getProducts();
 
@@ -94,7 +94,7 @@ class Cart
         return $total;
     }
 
-    public static function getAdminTotalPrice($products, $userProducts)
+    public static function getAdminTotalPrice(array $products, array $userProducts)
     {
         $total = 0;
 

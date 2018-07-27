@@ -22,10 +22,10 @@ class AdminUsersController extends AdminBase
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return bool
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id)
     {
         $result = false;
         $user = User::getUserById($id);

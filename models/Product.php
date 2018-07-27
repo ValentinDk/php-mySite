@@ -7,7 +7,7 @@ class Product
 {
     const SHOW_BY_DEFAULT = 3;
 
-    public static function getLatestProducts(int $count = self::SHOW_BY_DEFAULT)
+    public static function getLatestProducts($count = self::SHOW_BY_DEFAULT)
     {
         $db = Database::getConnection();
 
@@ -25,7 +25,7 @@ class Product
         return $productsList;
     }
 
-    public static function getProductsListByCategory($categoryId = false, $page = 1)
+    public static function getProductsListByCategory($categoryId = false, int $page = 1)
     {
         if ($categoryId) {
 
@@ -91,7 +91,7 @@ class Product
         return $row['count'];
     }
 
-    public static function getProductsByIds($idsArray)
+    public static function getProductsByIds(int $idsArray)
     {
         $products = [];
 
@@ -168,7 +168,19 @@ class Product
         return $result = $query->fetchAll();
     }
 
-    public static function edit($id, $name, $category_id, $code, $price, $availability, $brand, $description, $is_new, $is_recommended, $status)
+    public static function edit(
+        int $id,
+        string $name,
+        int $category_id,
+        int $code,
+        float $price,
+        int $availability,
+        string $brand,
+        string $description,
+        int $is_new,
+        int $is_recommended,
+        int $status
+    )
     {
         $db = Database::getConnection();
 
@@ -218,7 +230,18 @@ class Product
         return $result = true;
     }
 
-    public static function create($name, $category_id, $code, $price, $availability, $brand, $description, $is_new, $is_recommended, $status)
+    public static function create(
+        string $name,
+        int $category_id,
+        int $code,
+        float $price,
+        int $availability,
+        string $brand,
+        string $description,
+        int $is_new,
+        int $is_recommended,
+        int $status
+    )
     {
         $db = Database::getConnection();
 

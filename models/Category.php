@@ -36,7 +36,7 @@ class Category
         return $query->fetch();
     }
 
-    public static function create($name, $sort_order, $status)
+    public static function create(string $name, int $sort_order, int $status)
     {
         $db = Database::getConnection();
 
@@ -62,7 +62,7 @@ class Category
         return $result = true;
     }
 
-    public static function edit($id, $name, $sort_order, $status)
+    public static function edit(int $id, string $name, int $sort_order, int $status)
     {
          $db = Database::getConnection();
 

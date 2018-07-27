@@ -30,7 +30,7 @@ class AdminProductsController extends AdminBase
         return true;
     }
 
-    public function actionEdit($id)
+    public function actionEdit(int $id)
     {
         $result = false;
         $product = Product::getProductById($id);
@@ -85,7 +85,7 @@ class AdminProductsController extends AdminBase
      * @param $id
      * @return bool
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id)
     {
         $result = false;
         $product = Product::getProductById($id);

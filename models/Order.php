@@ -5,7 +5,14 @@ use components\Database;
 
 class Order 
 {
-	public static function save($userName, $userPhone, $userComment, $userId, $products, $price)
+	public static function save(
+	    string $userName,
+        string $userPhone,
+        string $userComment,
+        int $userId,
+        array $products,
+        float $price
+    )
 	{
 		$db = Database::getConnection();
 		$products = json_encode($products);

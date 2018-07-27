@@ -5,7 +5,7 @@ use components\Database;
 
 class User
 {
-    public static function register($name, $email, $password)
+    public static function register(string $name, string $email, string $password)
     {
         $db = Database::getConnection();
 
@@ -26,7 +26,7 @@ class User
         return $result;
     }
 
-     public static function edit($id, $name, $password)
+     public static function edit(int $id, string $name, string $password)
     {
         $db = Database::getConnection();
 
@@ -47,7 +47,7 @@ class User
         return $result;
     }
 
-    public static function checkUserData($email, $password)
+    public static function checkUserData(string $email, string $password)
     {
         $db = Database::getConnection();
 
@@ -69,12 +69,12 @@ class User
         return false;
     }
 
-    public static function auth($user)
+    public static function auth(array $user)
     {
         $_SESSION['user'] = $user;
     }
 
-    public static function checkName($name)
+    public static function checkName(string $name)
     {
         if (strlen($name) >= 2) {
             return true;
@@ -82,7 +82,7 @@ class User
         return false;
     }
 
-    public static function checkPassword($password)
+    public static function checkPassword(string $password)
     {
         if (strlen($password) >= 6) {
             return true;
@@ -90,7 +90,7 @@ class User
         return false;
     }
 
-    public static function checkEmail($email)
+    public static function checkEmail(string $email)
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
@@ -106,7 +106,7 @@ class User
         return false;
     }
 
-    public static function checkEmailExists($email)
+    public static function checkEmailExists(string $email)
     {
         $db = Database::getConnection();
 
@@ -160,7 +160,7 @@ class User
         }
     }
 
-    public static function saveCart($userId, $products)
+    public static function saveCart(int $userId, $products)
     {
         $db = Database::getConnection();
         $query = $db->prepare(
@@ -194,7 +194,7 @@ class User
         return $result;
     }
 
-    public static function delete($id)
+    public static function delete(int $id)
     {
         $db = Database::getConnection();
 

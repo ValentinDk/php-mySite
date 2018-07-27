@@ -10,14 +10,14 @@ use models\Order;
 
 class CartController extends BaseController
 {
-    public function actionAddAjax($id)
+    public function actionAddAjax(int $id)
     {
         echo Cart::addProduct($id);
 
         return true;
     }
 
-    public function actionDeleteAjax($id)
+    public function actionDeleteAjax(int $id)
     {
         Cart::deleteProduct($id);
 

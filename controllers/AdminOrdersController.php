@@ -20,10 +20,10 @@ class AdminOrdersController extends AdminBase
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return bool
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id)
     {
         $result = false;
         $order = Order::getOrderById($id);
@@ -45,10 +45,10 @@ class AdminOrdersController extends AdminBase
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return bool
      */
-    public function actionView($id)
+    public function actionView(int $id)
     {
         $order = Order::getOrderById($id);
         $productsInCart = Cart::getProducts();
