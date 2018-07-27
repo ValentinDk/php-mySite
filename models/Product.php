@@ -91,7 +91,7 @@ class Product
         return $row['count'];
     }
 
-    public static function getProductsByIds(int $idsArray)
+    public static function getProductsByIds(array $idsArray)
     {
         $products = [];
 
