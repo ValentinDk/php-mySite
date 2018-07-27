@@ -2,6 +2,7 @@
 namespace components;
 
 use models\User;
+use models\Category;
 
 class AdminBase
 {
@@ -21,4 +22,13 @@ class AdminBase
 			die;
 		}
 	}
+
+    public function getCategoriesView()
+    {
+        $categories = Category::getAllCategories();
+        return $categoriesView = $this->objView->fetchPartial(
+            'admin/layouts/category',
+            ['categories' => $categories]
+        );
+    }
 }

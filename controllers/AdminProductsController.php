@@ -2,7 +2,6 @@
 namespace controllers;
 
 use components\AdminBase;
-use components\Pagination;
 use models\Product;
 use models\Category;
 
@@ -13,13 +12,9 @@ class AdminProductsController extends AdminBase
      */
     public function actionHidden()
     {
-        $categories = Category::getAllCategories();
         $products = Product::getHiddenProducts();
+        $categoriesView = $this->getCategoriesView();
 
-        $categoriesView = $this->objView->fetchPartial(
-            'admin/layouts/category',
-            ['categories' => $categories]
-        );
         $this->objView->render(
             'admin/products/hiddenProducts',
             [
@@ -115,7 +110,7 @@ class AdminProductsController extends AdminBase
     public function actionCreate()
     {
         $result = false;
-        $categories = Category::getCategoriesList();
+        $categories = Category::getAllCategories();
 
         if (isset($_POST['submit'])) {
             $name = $_POST['name'];
