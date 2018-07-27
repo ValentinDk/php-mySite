@@ -48,7 +48,7 @@
                                 <form action="#" method="post">
 
                                     <p>Ваше имя</p>
-                                    <input type="text" name="userName" placeholder="" value="<?= $userName; ?>"/>
+                                    <input type="text" name="userName" value="<?= $userName; ?>"/>
 
                                     <p>Номер телефона</p>
                                     <input type="text" name="userPhone"/>
