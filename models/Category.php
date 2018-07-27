@@ -102,8 +102,6 @@ class Category
     {
         $db = Database::getConnection();
 
-        $categoryList = [];
-        
         $query = $db->query(
             'SELECT id, name
              FROM category
