@@ -47,7 +47,12 @@ class CartController extends BaseController
         return $errors;
     }
 
-    private function saveOrder($userName, $userPhone, $userComment, $productsInCart, $totalPrice)
+    private function saveOrder(
+        string $userName,
+        string $userPhone,
+        string $userComment,
+        array $productsInCart,
+        float $totalPrice)
     {
         if (User::isGuest()) {
             $userId = false;
@@ -65,7 +70,7 @@ class CartController extends BaseController
         return true;
     }
 
-    private function sendMessageAdmin($result)
+    private function sendMessageAdmin(boolean $result)
     {
         if ($result) {
             $adminEmail = 'tarasenok2012@mail.ru';
@@ -76,7 +81,7 @@ class CartController extends BaseController
         }
     }
 
-    private function workWithForm($userName, $userPhone, $userComment, $errors)
+    private function workWithForm(string $userName, string $userPhone, string $userComment, array $errors)
     {
         if (empty($errors)) {
             $productsInCart = Cart::getProducts();
