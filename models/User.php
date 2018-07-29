@@ -2,6 +2,7 @@
 namespace models;
 
 use components\Database;
+use components\Errors;
 
 class User
 {
@@ -76,26 +77,23 @@ class User
 
     public static function checkName(string $name)
     {
-        if (strlen($name) >= 2) {
-            return true;
+        if (!(strlen($name) >= 2)) {
+            return 'Имя не должно быть короче 3-ух символов';
         }
-        return false;
     }
 
     public static function checkPassword(string $password)
     {
-        if (strlen($password) >= 6) {
-            return true;
+        if (!(strlen($password) >= 6)) {
+            return 'Пароль должен быть не короче 6-ти символов';
         }
-        return false;
     }
 
     public static function checkEmail(string $email)
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return true;
+        if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
+            return 'Некорректно введён email';
         }
-        return false;
     }
 
     public static function checkPhone($phone)
@@ -122,6 +120,26 @@ class User
             return true;
         }
         return false;
+    }
+
+    public static function validation(array $user)
+    {
+        $errors = [];
+        if (isset($user['name'])) {
+            $errors[] = User::checkName($user['name']);
+        }
+        if (isset($user['email'])) {
+            if (User::checkEmailExists($user['email'])) {
+                $errors[] = 'Такой email уже существует';
+            } else {
+            $errors[] = User::checkEmail($user['email']);
+            }
+        }
+        if (isset($user['password'])) {
+            $errors[] = User::checkPassword($user['password']);
+        }
+        $result = Errors::checkErrors($errors);
+        return $result;
     }
 
     public static function isGuest()
