@@ -200,8 +200,6 @@ class User
     {
         $db = Database::getConnection();
 
-        $result = [];
-
         $query = $db->query(
             'SELECT * FROM user
              WHERE role = "User"
