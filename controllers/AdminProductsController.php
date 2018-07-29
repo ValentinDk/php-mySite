@@ -60,10 +60,8 @@ class AdminProductsController extends AdminBase
                 $status
             );
             Product::setImage($product['id']);
-
             $result = true;
         }
-
         $this->objView->render(
             'admin/products/edit',
             [
@@ -89,7 +87,6 @@ class AdminProductsController extends AdminBase
             Product::delete($product['id']);
             Product::deleteImage($id);
             $result = true;
-            
         } elseif (isset($_POST['undelete'])) {
             header ('Location: /admin');
             exit;
@@ -137,7 +134,6 @@ class AdminProductsController extends AdminBase
                 $status
             );
             Product::setImage($id);
-
             $result = true;
         }
         $this->objView->render(

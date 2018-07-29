@@ -93,10 +93,7 @@ class Product
 
     public static function getProductsByIds(array $idsArray)
     {
-        $products = [];
-
         $db = Database::getConnection();
-
         $idsString = implode(',', $idsArray);
 
         $query = $db->query(

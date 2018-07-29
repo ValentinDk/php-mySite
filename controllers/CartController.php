@@ -49,6 +49,14 @@ class CartController extends BaseController
         return $errors;
     }
 
+    /**
+     * @param string $userName
+     * @param string $userPhone
+     * @param string $userComment
+     * @param array $productsInCart
+     * @param float $totalPrice
+     * @return bool
+     */
     private function saveOrder(
         string $userName,
         string $userPhone,
@@ -66,7 +74,7 @@ class CartController extends BaseController
         return true;
     }
 
-    private function sendMessageAdmin(boolean $result)
+    private function sendMessageAdmin(bool $result)
     {
         if ($result) {
             $adminEmail = 'tarasenok2012@mail.ru';

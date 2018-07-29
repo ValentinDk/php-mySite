@@ -51,12 +51,10 @@ class AdminOrdersController extends AdminBase
     public function actionView(int $id)
     {
         $order = Order::getOrderById($id);
-        $productsInCart = Cart::getProducts();
         $userProducts = json_decode($order['products'], true);
         $productsIds = array_keys($userProducts);
         $products = Product::getProductsByIds($productsIds);
         $totalPrice = Cart::getAdminTotalPrice($products, $userProducts);
-        $totalQuantity = Cart::countItems();
 
         $this->objView->render(
             '/admin/orders/order',

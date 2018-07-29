@@ -8,7 +8,7 @@ use models\Product;
 class AdminCategoryController extends AdminBase
 {
     /**
-     * @param $categoryId
+     * @param int $categoryId
      * @param int $page
      * @return bool
      */
@@ -93,7 +93,6 @@ class AdminCategoryController extends AdminBase
             'admin/catalog/create',
             ['result' => $result]
         );
-
         return true;
     }
 
@@ -109,7 +108,6 @@ class AdminCategoryController extends AdminBase
         if (isset($_POST['delete'])) {
             Category::delete($categoryId);
             $result = true;
-
         } elseif (isset($_POST['undelete'])) {
             header ('Location: /admin');
             exit;

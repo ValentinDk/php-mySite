@@ -13,7 +13,6 @@ class AdminController extends AdminBase
      */
     public function actionIndex($page = 1)
     {
-
         $products = Product::getProductsByPage($page);
         $total = Product::getTotalProducts();
         $categoriesView = $this->getCategoriesView();
@@ -32,7 +31,6 @@ class AdminController extends AdminBase
                 'pagination' => $pagination,
             ]
         );
-
         return true;
     }
 }

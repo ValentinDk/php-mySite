@@ -53,21 +53,16 @@ class SiteController extends BaseController
         $errors = [];
         // Обработка формы
         if (isset($_POST['submit'])) {
-            // Если форма отправлена 
-            // Получаем данные из формы
             $userEmail = $_POST['userEmail'];
             $userText = $_POST['userText'];
-            // Валидация полей
             if (!User::checkEmail($userEmail)) {
                 $errors[] = 'Неправильный email';
             }
             if (empty($errors)) {
-                // Если ошибок нет
-                // Отправляем письмо администратору 
                 $adminEmail = 'tarasenok2012@mail.ru';
                 $message = "Текст: {$userText}. От {$userEmail}";
                 $subject = 'Тема письма';
-                $result = mail($adminEmail, $subject, $message);
+                mail($adminEmail, $subject, $message);
                 $result = true;
             }
         }
