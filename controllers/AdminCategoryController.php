@@ -1,7 +1,6 @@
 <?php
 namespace controllers;
 
-use components\Pagination;
 use components\AdminBase;
 use models\Category;
 use models\Product;
@@ -13,7 +12,7 @@ class AdminCategoryController extends AdminBase
      * @param int $page
      * @return bool
      */
-    public function actionIndex($categoryId, int $page = 1)
+    public function actionIndex(int $categoryId, $page = 1)
     {
         $categories = Category::getAllCategories();
         $categoryProducts = Product::getProductsListByCategory($categoryId, $page);
@@ -68,7 +67,6 @@ class AdminCategoryController extends AdminBase
                 'categories' => $categories,
             ]
         );
-
         return true;
     }
 

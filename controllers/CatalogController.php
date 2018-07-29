@@ -8,7 +8,7 @@ use models\Product;
 
 class CatalogController extends BaseController
 {
-    public function actionIndex(int $page = 1)
+    public function actionIndex($page = 1)
     {
         $products = Product::getProductsByPage($page);
         $total = Product::getTotalProducts();
@@ -40,7 +40,7 @@ class CatalogController extends BaseController
      * @param int $page
      * @return bool
      */
-    public function actionCategory(int $categoryId, int $page = 1)
+    public function actionCategory(int $categoryId,$page = 1)
     {
         $categories = Category::getCategoriesList();
         $categoryProducts = Product::getProductsListByCategory($categoryId, $page);

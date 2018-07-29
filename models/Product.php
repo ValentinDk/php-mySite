@@ -25,7 +25,7 @@ class Product
         return $productsList;
     }
 
-    public static function getProductsListByCategory($categoryId = false, int $page = 1)
+    public static function getProductsListByCategory($categoryId = false, $page = 1)
     {
         if ($categoryId) {
 

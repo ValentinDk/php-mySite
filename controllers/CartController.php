@@ -10,6 +10,10 @@ use models\Order;
 
 class CartController extends BaseController
 {
+    /**
+     * @param int $id
+     * @return bool
+     */
     public function actionAddAjax(int $id)
     {
         echo Cart::addProduct($id);
@@ -32,7 +36,6 @@ class CartController extends BaseController
             'layouts/main', 
             ['content' => $content]
         );
-
         return true;
     }
 

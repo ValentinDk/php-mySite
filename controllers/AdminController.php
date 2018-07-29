@@ -11,7 +11,7 @@ class AdminController extends AdminBase
      * @param int $page
      * @return bool
      */
-    public function actionIndex(int $page = 1)
+    public function actionIndex($page = 1)
     {
 
         $products = Product::getProductsByPage($page);
